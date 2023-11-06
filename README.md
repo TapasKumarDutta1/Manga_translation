@@ -28,7 +28,7 @@ The project integrates the following components:
 
 1. Clone the repository.
 2. Install requirements using   `pip install -r requirements.txt`
-3. Follow the colab example.
+3. Follow the colab example. `working_example.ipynb`
 
 
 ## Citation
