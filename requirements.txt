@@ -18,6 +18,5 @@ git+https://github.com/facebookresearch/detr.git
 
 git+https://github.com/TapasKumarDutta1/Transformer-pytorch.git
 
-git+https://github.com/TapasKumarDutta1/Manga_translation.git
 
 
