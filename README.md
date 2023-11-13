@@ -12,9 +12,9 @@ The project integrates the following components:
 - **Dataset**: Trained on the Manga109 dataset.
 - **Description**: DETR is employed for object detection tasks, identifying and localizing different elements within manga pages.
 - **Rsults**:
-
- --- | --- | ---
-![alt text](images/image.png) | ![alt text](images/seg.png) | ![alt text](images/seg.png)
+  
+| ![alt text](images/image.png) | ![alt text](images/seg.png) | ![alt text](images/seg.png) |
+| --- | --- | --- |
 
 ### 2. Trocr (TRansformer for Optical Character Recognition)
 
