@@ -33,7 +33,7 @@ The project integrates the following components:
 - **Description**: A Transformer-based architecture is utilized for translating the Japanese text extracted from manga images to English. This system ensures accurate and contextually relevant translations.
 - **Rsults**:
   
-| but now we can finally get married ! | You can serve men in the same age . | I feel like a man 's good at getting a man back at me . |
+| but now we can finally get married !| You can serve men in the same age .| I feel like a man 's good at getting a man back at me .|
 | --- | --- | --- |
  
 ## How to Use
