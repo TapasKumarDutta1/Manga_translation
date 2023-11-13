@@ -11,18 +11,29 @@ The project integrates the following components:
 - **Objective**: Object detection within manga pages.
 - **Dataset**: Trained on the Manga109 dataset.
 - **Description**: DETR is employed for object detection tasks, identifying and localizing different elements within manga pages.
+- **Rsults**:
+ --- | --- | ---
+![alt text](images/image.png) | ![alt text](images/seg.png) | ![alt text](images/seg.png)
 
 ### 2. Trocr (TRansformer for Optical Character Recognition)
 
 - **Objective**: Text recognition on manga images.
 - **Dataset**: Extracted samples from the Manga109 dataset.
 - **Description**: Trocr is responsible for recognizing text present within manga images, enabling the extraction of textual content for translation.
+- **Rsults**:
+ --- | --- | ---
+でもこれでやっと結婚が出来るッ | 人並みに男に仕える事が出来るッ | 男に戻すことに快感を感じているッ
 
 ### 3. Transformer Architecture for Translation
 
 - **Objective**: Japanese to English translation.
 - **Dataset**: Japanese English Subtittle Corpus.
 - **Description**: A Transformer-based architecture is utilized for translating the Japanese text extracted from manga images to English. This system ensures accurate and contextually relevant translations.
+- **Rsults**:
+ --- | --- | ---
+but now we can finally get married !
+ | You can serve men in the same age .
+ | I feel like a man 's good at getting a man back at me .
 
 ## How to Use
 
