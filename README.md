@@ -13,7 +13,7 @@ The project integrates the following components:
 - **Description**: DETR is employed for object detection tasks, identifying and localizing different elements within manga pages.
 - **Rsults**:
   
-| ![alt text](images/21.png) | ![alt text](images/27.png) | ![alt text](images/87.png) |
+| ![alt text](images/21.jpg) | ![alt text](images/27.jpg) | ![alt text](images/87.jpg) |
 | --- | --- | --- |
 
 ### 2. Trocr (TRansformer for Optical Character Recognition)
