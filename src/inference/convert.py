@@ -116,6 +116,7 @@ def detect_and_translate(coords):
     translate_model, model, tokenizer = create_models()
     org = cv2.imread("/content/removed.jpg")
     for path in glob.glob("/content/detected/*"):
+        print(path)
         image = cv2.imread(path)
         image = cv2.resize(image, (224, 224)) / 255
         image = torch.tensor(image).permute(2, 0, 1)
@@ -123,7 +124,9 @@ def detect_and_translate(coords):
         generated_text = tokenizer.batch_decode(
             generated_ids, skip_special_tokens=True
         )[0]
+        print(generated_text)
         text = translate(translate_model, generated_text, custom_sentence=True)
+        print(text)
         y1, y2, x1, x2 = coords[path.split("/")[-1].split(".")[0]]
 
         box_coordinates = (x1, y1, y2 - y1, x2 - x1)
