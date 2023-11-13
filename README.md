@@ -23,8 +23,8 @@ The project integrates the following components:
 - **Description**: Trocr is responsible for recognizing text present within manga images, enabling the extraction of textual content for translation.
 - **Rsults**:
   
- --- | --- | ---
-でもこれでやっと結婚が出来るッ | 人並みに男に仕える事が出来るッ | 男に戻すことに快感を感じているッ
+| --- | --- | --- |
+| でもこれでやっと結婚が出来るッ | 人並みに男に仕える事が出来るッ | 男に戻すことに快感を感じているッ |
 
 ### 3. Transformer Architecture for Translation
 
