@@ -35,13 +35,18 @@ The project integrates the following components:
   
 | but now we can finally get married! | You can serve men in the same age. | I feel like a man's good at getting a man back at me. |
 | --- | --- | --- |
- 
+
 ## How to Use
 
 1. Clone the repository.
 2. Install requirements using   `pip install -r requirements.txt`
 3. Follow the colab example `working_example.ipynb`
 
+## TODO
+
+1. Use pretrained weights for translation model
+2. Write the TrOCR model from scratch, with pretrained weights.
+3. Write the DETR model from scratch, with pretrained weights.
 
 ## Citation
 
