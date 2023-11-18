@@ -143,7 +143,7 @@ def create_models():
     translate_model = Transformer(N, HEADS, src_vocab, trg_vocab, D_MODEL)
     translate_model.load_state_dict(
         torch.load(
-            "/content/weights.hdf5",
+            "/content/10 (1).pth",
             map_location=torch.device("cpu"),
         )['weights']
     )
