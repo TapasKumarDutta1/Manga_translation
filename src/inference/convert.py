@@ -144,7 +144,7 @@ def create_models():
     translate_model = Transformer(N, HEADS, len(list(jp_tokenizer.vocab)), len(list(en_tokenizer .vocab)), D_MODEL)
     translate_model.load_state_dict(
         torch.load(
-            "/content/10 (1).pth",
+            "/content/weights_pretrained.hdf5",
             map_location=torch.device("cpu"),
         )['weights']
     )
