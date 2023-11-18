@@ -62,8 +62,6 @@ def translate(model, src, max_len=80, custom_sentence=False):
     return ' '.join([list(en_tokenizer.vocab)[ix] for ix in outputs[1:i]])
     
 def create_models():
-    src_vocab = len(jps)
-    trg_vocab = len(ens)
     tokenizer = AutoTokenizer.from_pretrained(
         "KoichiYasuoka/bert-base-japanese-char-extended"
     )
