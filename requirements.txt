@@ -14,5 +14,7 @@ sudachidict_core
 
 en_core_web_sm
 
+fugashi
 
+ipadic
 
