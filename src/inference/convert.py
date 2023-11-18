@@ -37,6 +37,9 @@ input_pad = jps["<pad>"]
 target_pad = ens["<pad>"]
 
 
+en_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+jp_tokenizer = AutoTokenizer.from_pretrained("cl-tohoku/bert-base-japanese")
+
 def tokenize_ja(sentence):
     return [tok.text for tok in JA.tokenizer(sentence)]
 
@@ -80,8 +83,6 @@ def translate1(model, src, max_len=80, custom_sentence=False):
     
     # Tokenizer
     
-    en_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-    jp_tokenizer = AutoTokenizer.from_pretrained("cl-tohoku/bert-base-japanese")
     model.eval()
     
     if custom_sentence == True:
@@ -140,7 +141,7 @@ def create_models():
     model.config.num_beams = 4
     model = model.from_pretrained("/content/checkpoint")
     device = "cpu"
-    translate_model = Transformer(N, HEADS, src_vocab, trg_vocab, D_MODEL)
+    translate_model = Transformer(N, HEADS, len(list(jp_tokenizer.vocab)), len(list(en_tokenizer .vocab)), D_MODEL)
     translate_model.load_state_dict(
         torch.load(
             "/content/10 (1).pth",
