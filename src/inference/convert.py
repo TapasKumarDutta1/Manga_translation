@@ -13,73 +13,19 @@ import cv2
 import glob
 from utils import put_text_in_box
 from matplotlib import pyplot as plt
-
-jps = np.load(
-    "/content/jps.npy",
-    allow_pickle=True,
-).item()
-ens = np.load(
-    "/content/ens.npy",
-    allow_pickle=True,
-).item()
-eni = np.load(
-    "/content/eni.npy",
-    allow_pickle=True,
-)
-
 D_MODEL = 768
 HEADS = 8
 N = 6
 device = "cpu"
-JA = spacy.blank("ja")
-EN = spacy.load("en_core_web_sm")
-input_pad = jps["<pad>"]
-target_pad = ens["<pad>"]
 
 
 en_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 jp_tokenizer = AutoTokenizer.from_pretrained("cl-tohoku/bert-base-japanese")
 
-def tokenize_ja(sentence):
-    return [tok.text for tok in JA.tokenizer(sentence)]
-
-
-def tokenize_en(sentence):
-    return [tok.text for tok in EN.tokenizer(sentence)]
-
+target_pad = en_tokenizer.vocab['[PAD]']
+input_pad = jp_tokenizer.vocab['[PAD]']
 
 def translate(model, src, max_len=80, custom_sentence=False):
-    model.eval()
-    print(src)
-    if custom_sentence == True:
-        src = tokenize_ja(src)
-        src = torch.autograd.Variable(torch.LongTensor([[jps[tok] for tok in src]])).to(
-            device
-        )
-
-    src_mask = (src != input_pad).unsqueeze(-2)
-    e_outputs = model.encode(src, src_mask)
-
-    outputs = torch.zeros(max_len).type_as(src.data)
-    outputs[0] = torch.LongTensor([ens["<sos>"]])
-
-    for i in range(1, max_len):
-        trg_mask = np.triu(np.ones((1, i, i)), k=1).astype("uint8")
-        trg_mask = torch.autograd.Variable(torch.from_numpy(trg_mask) == 0).to(device)
-
-        out = model.out(
-            model.decode(outputs[:i].unsqueeze(0), e_outputs, src_mask, trg_mask)
-        )
-        out = F.softmax(out, dim=-1)
-        val, ix = out[:, -1].data.topk(1)
-
-        outputs[i] = ix[0][0]
-        if ix[0][0] == ens["<eos>"]:
-            break
-
-    return " ".join([eni[ix] for ix in outputs[1:i]])
-
-def translate1(model, src, max_len=80, custom_sentence=False):
     
     # Tokenizer
     
@@ -162,7 +108,7 @@ def detect_and_translate(coords):
         generated_text = tokenizer.batch_decode(
             generated_ids, skip_special_tokens=True
         )[0]
-        text = translate1(translate_model, generated_text, custom_sentence=True)
+        text = translate(translate_model, generated_text, custom_sentence=True)
         y1, y2, x1, x2 = coords[path.split("/")[-1].split(".")[0]]
 
         box_coordinates = (x1, y1, y2 - y1, x2 - x1)
