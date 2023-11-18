@@ -46,7 +46,7 @@ def tokenize_en(sentence):
 
 def translate(model, src, max_len=80, custom_sentence=False):
     model.eval()
-
+    print(src)
     if custom_sentence == True:
         src = tokenize_ja(src)
         src = torch.autograd.Variable(torch.LongTensor([[jps[tok] for tok in src]])).to(
