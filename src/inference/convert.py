@@ -5,6 +5,7 @@ from torch.nn import functional as F
 import spacy
 from utils import put_text_in_box
 
+from transformers import AutoModel, AutoTokenizer, BertModel, BertTokenizer
 sys.path.append("./Transformer-pytorch/")
 from seq2seq.attention_is_all_you_need import Transformer
 from transformers import VisionEncoderDecoderModel, TrOCRProcessor, AutoTokenizer
@@ -75,7 +76,44 @@ def translate(model, src, max_len=80, custom_sentence=False):
 
     return " ".join([eni[ix] for ix in outputs[1:i]])
 
+def translate1(model, src, max_len=80, custom_sentence=False):
+    
+    # Tokenizer
+    
+    en_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    jp_tokenizer = AutoTokenizer.from_pretrained("cl-tohoku/bert-base-japanese")
+    model.eval()
+    
+    if custom_sentence == True:
+        src = jp_tokenizer.batch_encode_plus([src], padding=True, truncation=True, return_tensors='pt')['input_ids'].to(device)
+    
+    src_mask  = (src != input_pad).unsqueeze(-2)
+    e_outputs = model.encoder(src, src_mask)
 
+    outputs = torch.zeros(max_len).type_as(src.data)
+    outputs[0] = 101
+    
+    for i in range(1, max_len):    
+        trg_mask = np.triu(np.ones((1, i, i)), k=1).astype('uint8')
+        trg_mask = torch.autograd.Variable(torch.from_numpy(trg_mask) == 0).to(device)
+
+        out = model.out(
+            model.decoder(
+                outputs[:i].unsqueeze(0),
+                e_outputs,
+                src_mask,
+                trg_mask
+            )
+        )
+        out = F.softmax(out, dim=-1)
+        val, ix = out[:, -1].data.topk(1)
+
+        outputs[i] = ix[0][0]
+        if ix[0][0] == 102:
+            break
+
+    return ' '.join([list(en_tokenizer.vocab)[ix] for ix in outputs[1:i]])
+    
 def create_models():
     src_vocab = len(jps)
     trg_vocab = len(ens)
@@ -107,7 +145,7 @@ def create_models():
         torch.load(
             "/content/weights.hdf5",
             map_location=torch.device("cpu"),
-        )
+        )['weights']
     )
     return translate_model, model, tokenizer
 
@@ -123,7 +161,7 @@ def detect_and_translate(coords):
         generated_text = tokenizer.batch_decode(
             generated_ids, skip_special_tokens=True
         )[0]
-        text = translate(translate_model, generated_text, custom_sentence=True)
+        text = translate1(translate_model, generated_text, custom_sentence=True)
         y1, y2, x1, x2 = coords[path.split("/")[-1].split(".")[0]]
 
         box_coordinates = (x1, y1, y2 - y1, x2 - x1)
