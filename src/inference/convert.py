@@ -89,7 +89,7 @@ def translate1(model, src, max_len=80, custom_sentence=False):
         src = jp_tokenizer.batch_encode_plus([src], padding=True, truncation=True, return_tensors='pt')['input_ids'].to(device)
     
     src_mask  = (src != input_pad).unsqueeze(-2)
-    e_outputs = model.encoder(src, src_mask)
+    e_outputs = model.encode(src, src_mask)
 
     outputs = torch.zeros(max_len).type_as(src.data)
     outputs[0] = 101
@@ -99,7 +99,7 @@ def translate1(model, src, max_len=80, custom_sentence=False):
         trg_mask = torch.autograd.Variable(torch.from_numpy(trg_mask) == 0).to(device)
 
         out = model.out(
-            model.decoder(
+            model.decode(
                 outputs[:i].unsqueeze(0),
                 e_outputs,
                 src_mask,
