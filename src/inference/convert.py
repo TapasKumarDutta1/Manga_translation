@@ -27,7 +27,7 @@ eni = np.load(
     allow_pickle=True,
 )
 
-D_MODEL = 512
+D_MODEL = 768
 HEADS = 8
 N = 6
 device = "cpu"
