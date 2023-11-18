@@ -146,7 +146,7 @@ def create_models():
         torch.load(
             "/content/weights_pretrained.hdf5",
             map_location=torch.device("cpu"),
-        )['weights']
+        )
     )
     return translate_model, model, tokenizer
 
