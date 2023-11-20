@@ -108,7 +108,6 @@ def detect_and_translate(coords):
         )[0]
         text = translate(translate_model, generated_text, custom_sentence=True)
         y1, y2, x1, x2 = coords[path.split("/")[-1].split(".")[0]]
-        print(text)
         box_coordinates = (x1, y1, y2 - y1, x2 - x1)
         image_with_text = put_text_in_box(org, text, box_coordinates)
 
